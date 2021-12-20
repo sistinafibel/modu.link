@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { getConnection, getRepository } from 'typeorm';
 import { UrlList } from '../entity/test.entity';
+import { CreateUrlDto } from '../dtos/url.dto';
 
 class UrlController {
   /**
@@ -10,10 +10,11 @@ class UrlController {
    * @param next
    */
   public createUrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const bodyData: CreateUrlDto = req.body;
     const urlList = new UrlList();
     const timestamp = Number(String(Math.floor(Math.random() * 10)) + String(new Date().getTime()));
 
-    urlList.fullUrl = 'https://naver.com';
+    urlList.fullUrl = bodyData.url;
     urlList.shutUrl = timestamp.toString(32);
 
     await urlList.save();
