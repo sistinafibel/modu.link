@@ -1,9 +1,15 @@
-import { IsArray, IsNumber, IsNumberString, IsString, IsEnum, Length } from 'class-validator';
+import { IsArray, IsNumber, IsNumberString, IsString, IsEnum, Length, ValidateIf } from 'class-validator';
 
 export class CreateUrlDto {
   @IsString()
-  @Length(5, 150)
   public url: string;
+
+  @IsNumber()
+  public type: number;
+
+  @ValidateIf(o => o.type === 1)
+  @IsString()
+  public customUrl: string;
 }
 
 export class UrlViewDto {

@@ -46,7 +46,10 @@ class App {
       .then(connection => {
         log(`DB에 정상적으로 연결되었습니다 (TypeORM)`, true);
       })
-      .catch(error => log(`DB 연결에 실패했습니다. (TypeORM)`, true));
+      .catch(error => {
+        log(error);
+        log(`DB 연결에 실패했습니다. (TypeORM)`, true);
+      });
   }
 
   private initializeMiddlewares() {

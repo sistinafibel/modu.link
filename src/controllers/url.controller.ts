@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { UrlList } from '../entity/url.entity';
 import { CreateUrlDto } from '../dtos/url.dto';
 import ContactUsService from '../services/url.service';
+import HttpException from '../exceptions/HttpException';
+import { UrlMessage } from '../message/url.message';
 
 class UrlController {
   private contactUsService = new ContactUsService();
@@ -30,10 +31,11 @@ class UrlController {
    * @param next
    * @returns
    */
-  public viewUrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public shutUrlView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const paramUrl = req.params.url;
-      const urlUrl = await this.contactUsService.viewUrl(paramUrl);
+      const urlUrl = await this.contactUsService.shutUrlView(paramUrl);
+      if (!urlUrl) throw new HttpException(404, UrlMessage.NULL_URL);
 
       res.status(301).redirect(urlUrl.fullUrl);
     } catch (error) {

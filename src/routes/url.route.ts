@@ -17,7 +17,7 @@ class UrlRoute implements Route {
 
   private initializeRoutes() {
     this.router.post(`${this.path}/create`, validationMiddleware(dto.CreateUrlDto), this.urlController.createUrl);
-    this.router.get(`${this.path}/:url`, validationParamsMiddleware(dto.UrlViewDto), this.urlController.viewUrl);
+    this.router.get(`${this.path}/:url`, validationParamsMiddleware(dto.UrlViewDto), this.urlController.shutUrlView);
   }
 }
 
