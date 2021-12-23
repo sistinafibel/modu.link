@@ -1,18 +1,22 @@
+import path from 'path';
 import { ConnectionOptions } from 'typeorm';
 
 export const dbConnection: ConnectionOptions = {
   type: 'postgres',
   host: String(process.env.DB_HOST),
-  port: 5432,
+  port: Number(process.env.DB_PORT),
   username: String(process.env.DB_USER),
   password: String(process.env.DB_PASSWORD),
   database: String(process.env.DB_TABLE_NAME),
-  synchronize: true, // 스키마의 테이블 / 컬럼 변경 -- 테스트 환경에서만 사용할 것
+  schema: String(process.env.DB_SCHEMAS),
+  synchronize: true,
   logging: false,
-  entities: ['src/entity/**/*.ts'], // 테이블 & 컬럼 :: 생성 연결에 사용되며 로드되는 entity. 설정한 entity class와 로드하기 위한 directory path를 허용
+  entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
+  migrations: [path.join(__dirname, '../**/*.migration{.ts,.js}')],
+  subscribers: [path.join(__dirname, '../**/*.subscriber{.ts,.js}')],
   cli: {
-    entitiesDir: 'src/entities',
-    migrationsDir: 'src/migrations',
+    entitiesDir: 'src/entity',
+    migrationsDir: 'src/migration',
     subscribersDir: 'src/subscriber',
   },
   extra: {

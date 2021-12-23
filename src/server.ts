@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 import 'dotenv/config';
 import App from './app';
-import TestRoute from './routes/test.route';
+import UrlRoute from './routes/url.route';
 import validateEnv from './utils/validateEnv';
 
 validateEnv();
 
 const app = new App([
-  new TestRoute()
+  new UrlRoute()
 ]);
 
 app.listen();

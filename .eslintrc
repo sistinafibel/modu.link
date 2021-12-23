@@ -5,32 +5,29 @@
   "extends": [
 		"airbnb-base",
 		"plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier"
 	],// 여기까지가 기본 룰 이후는 각자 세팅
   "parserOptions": { // 파서 옵션 
-    "ecmaVersion": 2018, //사용할 ECMAScript 버전
-    "sourceType": "module" // parser의 export 형태
+    "ecmaVersion": 2020, //사용할 ECMAScript 버전
+    "sourceType": "module", // parser의 export 형태
+    "project": ["./tsconfig.json"]
   },
 	"env": { //전역번수 선언 jest를 위해 추가 import 없이 쓰는 명령어들
 	    "jest": true
 	},
 	"rules": {
-    "no-shadow": "off",
-    "no-unused-vars": "off",
-    "max-len": "off",
-    "import/extensions": "off",
-    "class-methods-use-this": "off",
-    "max-classes-per-file": "off",
-    "import/prefer-default-export": "off",
-    "import/no-unresolved": "off",
+    "no-shadow": "off", // 쉐도우 설정
+    "import/extensions": "off", //import 방식의 차이
+    "class-methods-use-this": "off", // class 사용시 constructor 강제화 x
+    "max-classes-per-file": "off", // 파일당 최대 class 수 제한
+    "import/prefer-default-export": "off", //default export 금지
+    "import/no-unresolved": "off", // 절대경로 이슈
     "eslint-disable-next-line": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.js"]}],
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/explicit-member-accessibility": 0,
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-parameter-properties": 0,
-    "@typescript-eslint/interface-name-prefix": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
-    "@typescript-eslint/no-explicit-any": "off"
+    "no-unused-vars" : "off" , // 사용하지 않는 변수 허용 안함. - 잘못된 이슈가 좀 있음
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.js"]}], // 테스트 파일은 검사에서 예외
+    "@typescript-eslint/no-explicit-any": "off", // any 유형 사용
+    "@typescript-eslint/no-unused-vars": "off", // 잘못 판단하는 이슈들
+    "prettier/prettier": "error"
   }
 }

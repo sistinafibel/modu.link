@@ -1,11 +1,11 @@
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { RequestHandler } from 'express';
 import HttpException from '../exceptions/HttpException';
 
-export default function validationMiddleware(type: any, skipMissingProperties = false): RequestHandler {
+export function validationMiddleware(type: any, skipMissingProperties = false): RequestHandler {
   return (req, res, next) => {
-    validate(plainToClass(type, req.body), { skipMissingProperties }).then((errors: ValidationError[]) => {
+    validate(plainToInstance(type, req.body), { skipMissingProperties }).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
         const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
         next(new HttpException(400, message));
@@ -18,7 +18,7 @@ export default function validationMiddleware(type: any, skipMissingProperties = 
 
 export function validationParamsMiddleware(type: any, skipMissingProperties = false): RequestHandler {
   return (req, res, next) => {
-    validate(plainToClass(type, req.params), { skipMissingProperties }).then((errors: ValidationError[]) => {
+    validate(plainToInstance(type, req.params), { skipMissingProperties }).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
         const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
         next(new HttpException(400, message));
@@ -38,7 +38,7 @@ export function validationParamsMiddleware(type: any, skipMissingProperties = fa
  */
 export function validationServiceMiddleware(type: any, data: any, skipMissingProperties = false): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    validate(plainToClass(type, data), { skipMissingProperties }).then((errors: ValidationError[]) => {
+    validate(plainToInstance(type, data), { skipMissingProperties }).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
         const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
 
