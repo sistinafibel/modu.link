@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
+import path from 'path';
 import morgan from 'morgan';
 import compression from 'compression';
 import { createConnection } from 'typeorm';
@@ -29,6 +30,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandling();
+    this.initializeEJS();
   }
 
   public listen(): void {
@@ -54,8 +56,8 @@ class App {
 
   private initializeMiddlewares() {
     if (this.env) {
-      // this.app.use(cors({ origin: 'your.domain.com', credentials: true }));
-      this.app.use(cors({ origin: true, credentials: true }));
+      this.app.use(cors({ origin: 'your.domain.com', credentials: true }));
+      // this.app.use(cors({ origin: true, credentials: true }));
     } else {
       this.app.use(cors({ origin: true, credentials: true }));
     }
@@ -68,6 +70,13 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
+  }
+
+  public initializeEJS(): void {
+    this.app.use('/css', express.static(`${__dirname}/front/commons/css`));
+    this.app.use('/js', express.static(`${__dirname}/front/commons/js`));
+    this.app.set('views', path.join(`${__dirname}`, '/front/view'));
+    this.app.set('view engine', 'ejs');
   }
 
   private initializeRoutes(routes: Routes[]) {

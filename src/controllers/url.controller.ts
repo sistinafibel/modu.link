@@ -25,7 +25,7 @@ class UrlController {
   };
 
   /**
-   * 랜덤 링크 조회
+   * 링크 조회
    * @param req
    * @param res
    * @param next
@@ -35,7 +35,7 @@ class UrlController {
     try {
       const paramUrl = req.params.url;
       const urlUrl = await this.contactUsService.shutUrlView(paramUrl);
-      if (!urlUrl) throw new HttpException(404, UrlMessage.NULL_URL);
+      if (!urlUrl) throw new HttpException(404, UrlMessage.NULL_URL, true);
 
       res.status(301).redirect(urlUrl.fullUrl);
     } catch (error) {
