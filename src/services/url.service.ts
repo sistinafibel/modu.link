@@ -17,7 +17,7 @@ class ContactUsService {
 
       shutUrl = bodyData.customUrl;
     } else {
-      infoUrl = await this.shutUrlView(bodyData.url);
+      infoUrl = await this.fullUrlView(bodyData.url);
       if (infoUrl) shutUrl = infoUrl.shutUrl;
       else {
         const timestamp = Number(String(Math.floor(Math.random() * 10)) + String(new Date().getTime()));
