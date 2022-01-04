@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  modulink:
+    build:
+      context: ./
+      target: production-build-stage
+      dockerfile: Dockerfile
+    container_name: modulink_pro
+    ports:
+      - '4200:3000'
+    volumes:
+      - ./:/app
+      - /app/node_modules ## https://docs.docker.com/compose/compose-file/compose-file-v3/#volumes
+    environment:
+      - TZ=Asia/Seoul
+    restart: 'unless-stopped'
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
