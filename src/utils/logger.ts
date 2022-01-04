@@ -41,7 +41,7 @@ const logger = winston.createLogger({
 });
 
 // Production 환경이 아닌 경우(dev 등)
-if (['production', 'test'].indexOf(process.env.NODE_ENV) === -1) {
+if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
@@ -54,17 +54,13 @@ if (['production', 'test'].indexOf(process.env.NODE_ENV) === -1) {
 
 const info = {
   write: (message: string) => {
-    if (['production', 'test'].indexOf(process.env.NODE_ENV) === -1) {
-      logger.info(message);
-    }
+    logger.info(message);
   },
 };
 
 const error = {
   write: (message: string) => {
-    if (['production', 'test'].indexOf(process.env.NODE_ENV) === -1) {
-      logger.error(message);
-    }
+    logger.error(message);
   },
 };
 
