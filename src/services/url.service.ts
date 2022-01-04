@@ -12,7 +12,7 @@ class ContactUsService {
     let shutUrl: string;
 
     if (bodyData.type === 1) {
-      infoUrl = await this.fullUrlView(bodyData.customUrl);
+      infoUrl = await this.shutUrlView(bodyData.customUrl);
       if (infoUrl) throw new HttpException(409, UrlMessage.UNSUITABLE_URL);
 
       shutUrl = bodyData.customUrl;
