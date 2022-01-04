@@ -5,7 +5,7 @@ import { validationParamsMiddleware, validationMiddleware } from '../middlewares
 import * as dto from '../dtos/url.dto';
 
 class UrlRoute implements Route {
-  public path = '/url';
+  public path = '';
 
   public router = Router();
 
